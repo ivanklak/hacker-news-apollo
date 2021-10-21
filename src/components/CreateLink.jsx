@@ -59,7 +59,7 @@ const CreateLink = () => {
                 }
             });
         },
-        onCompleted: () => history.push('/new/1')
+        onCompleted: () => history.push('/')
     });
 
     return (
