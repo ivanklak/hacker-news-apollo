@@ -11,7 +11,6 @@ const CREATE_LINK_MUTATION = gql`
     ) {
         post(description: $description, url: $url) {
             id
-            createdAt
             url
             description
         }
@@ -19,22 +18,21 @@ const CREATE_LINK_MUTATION = gql`
 `;
 
 const CreateLink = () => {
+    const history = useHistory();
     const [formState, setFormState] = useState({
         description: '',
         url: ''
     });
-    const history = useHistory();
 
     const [createLink] = useMutation(CREATE_LINK_MUTATION, {
         variables: {
             description: formState.description,
             url: formState.url
         },
-        update: (cache, {data: {post}}) => {
-
+        update: (cache, { data: { post } }) => {
             const take = LINKS_PER_PAGE;
             const skip = 0;
-            const orderBy = {createdAt: 'desc'};
+            const orderBy = { createdAt: 'desc' };
 
             const data = cache.readQuery({
                 query: FEED_QUERY,
@@ -59,7 +57,7 @@ const CreateLink = () => {
                 }
             });
         },
-        onCompleted: () => history.push('/')
+        onCompleted: () => history.push('/new/1')
     });
 
     return (
